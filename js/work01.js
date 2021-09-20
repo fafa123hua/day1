@@ -1,11 +1,20 @@
-var http = require('http')
-var server = http.createServer()
+const http = require('http')
+const fs = require('fs')
+const server = http.createServer()
 server.on('request', function(req, res) {
     console.log('路径：' + req.url)
     console.log('地址：', req.socket.remoteAddress, req.socket.remotePort)
     var url = req.url
     if (url === '/') {
-        res.end('index page')
+        fs.readFile('index.html', (err, data) => {
+            if (err) {
+                response.writeHead(500, {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                })
+                response.end('500 服务器挂了')
+            }
+            res.end(data)
+        })
     } else if (url === '/login') {
         res.end('login page')
     } else if (url === '/register') {
