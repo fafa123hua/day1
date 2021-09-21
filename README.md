@@ -53,3 +53,10 @@ cookie数据存放在客户的浏览器上，session数据放在服务器上；�
 # day02
 ## koa-setup
 
+## webpack
+
+
+多入口多文件，版本更新考虑和服务器搭建等功能实现
+
+
+具体项目实现地址https://github.com/fafa123hua/flex
