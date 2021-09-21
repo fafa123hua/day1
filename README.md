@@ -50,5 +50,6 @@ cookie.setMaxAge控制其生命周期
 
 cookie数据存放在客户的浏览器上，session数据放在服务器上；带来的问题是cookie安全性不高，session会增加服务器负担
 
-
+# day02
+## koa-setup
 
