@@ -1,6 +1,9 @@
-# day01
+# day01 基础
+
+
 
 ## git提交规范
+
 格式：
 type(scope) : subject
 
@@ -50,13 +53,72 @@ cookie.setMaxAge控制其生命周期
 
 cookie数据存放在客户的浏览器上，session数据放在服务器上；带来的问题是cookie安全性不高，session会增加服务器负担
 
-# day02
+## day02 前端工程化
+
+
 ## koa-setup
 
-## webpack
 
+
+## webpack/rollup/vite
+
+
+
+#### webpack
 
 多入口多文件，版本更新考虑和服务器搭建等功能实现
 
-
 具体项目实现地址https://github.com/fafa123hua/flex
+
+
+
+#### webpack/rollup/vite区别优势使用
+
+
+
+
+
+## 测试
+
+##### 测试分层
+
+用户手动测试
+
+用户e2e测试
+
+用户组件测试
+
+用户单元测试
+
+
+
+##### 单测 jest
+
+
+
+##### 组件测试 cypress
+
+@cypress/vue@next
+
+@cypress/vite-dev-server
+
+运行 open-ct 
+
+vtu 是vue官方出版的测试
+
+
+
+##### e2e测试 cypress
+
+
+
+##### git hook （husky
+
+
+
+##### lint&eslint
+
+检测js代码里面的问题
+
+
+
