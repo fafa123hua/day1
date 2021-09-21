@@ -5,20 +5,7 @@ import { createPackageJsonTemplate } from "./packageJsonTemplate.js";
 import { question } from "./question/index.js";
 import { createConfig } from "./config.js";
 import execa from "execa";
-// 1. 把功能实现
-// 2. 重构
-
-// require commonjs
-
-// input
-
-// process
-// output
-
-// 程序的input
-// input
-// cli  -> gui
-
+import path from 'path'
 const answer = await question();
 const config = createConfig(answer);
 
@@ -31,19 +18,17 @@ fs.mkdirSync(getRootPath());
 fs.writeFileSync(getRootPath() + "/index.js", createIndexTemplate(config));
 
 // // 3. 创建了 Package.json
-// // 练习点： 基于数据生成 package.json
 fs.writeFileSync(
-  getRootPath() + "/package.json",
-  createPackageJsonTemplate(config)
+    getRootPath() + "/package.json",
+    createPackageJsonTemplate(config)
 );
 
 // // 4. 安装依赖
-// // TODO package  -> yarn
 execa("yarn", {
-  cwd: getRootPath(),
-  stdio: [2, 2, 2],
+    cwd: getRootPath(),
+    stdio: [2, 2, 2],
 });
 
 function getRootPath() {
-  return "./haha";
+    return path.resolve(process.cwd(), config.packageName)
 }
