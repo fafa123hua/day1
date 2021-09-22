@@ -1,3 +1,5 @@
+掘金地址：https://juejin.cn/user/2243435456897928
+
 # day01 基础
 
 
@@ -241,3 +243,30 @@ package.json加了type会有影响
 
 国际化要求提示；
 
+## 组件体系分析
+
+常见组件
+
+<https://ant.design>
+<https://vuetifyjs.com>
+<https://react-bootstrap.github.io>
+<https://mui.com>
+<https://element.eleme.io>
+
+
+
+### [Ant Design Pro](https://pro.ant.design/zh-CN)
+
+npx create-umi myapp
+
+第一步先选择 ant-design-pro，之后按需
+
+antd 的模板，simple 是基础模板，complete 包含 antd 的集成方案；
+
+ npm install 安装依赖，完成
+
+
+
+## 设计组件
+
+掘金地址：https://juejin.cn/post/7010761400532516895/
