@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <div class="top">
-      <Row>
+      <Row align='middle' >
       <Col>
       <h1><a id="logo">Ant Design</a></h1></Col>
       <Col flex="2" ><Input id="input" placeholder="搜索"/></Col>
@@ -21,6 +21,11 @@ function App() {
         <Menu.Item>资源</Menu.Item>
         <Menu.Item>国内镜像</Menu.Item>
         </Menu></Col>
+        </Row>
+        <Row>
+          <div class="biglogo">
+            Ant Design
+          </div>
         </Row>
         </div>
     </div>
