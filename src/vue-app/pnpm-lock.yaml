@@ -1,0 +1,15 @@
+lockfileVersion: 5.3
+
+specifiers:
+  vue: ^2.6.14
+
+dependencies:
+  vue: registry.nlark.com/vue/2.6.14
+
+packages:
+
+  registry.nlark.com/vue/2.6.14:
+    resolution: {integrity: sha1-5RqlJQJQ1Wmj+606ilpofWA24jU=, registry: http://registry.npm.taobao.org/, tarball: https://registry.nlark.com/vue/download/vue-2.6.14.tgz}
+    name: vue
+    version: 2.6.14
+    dev: false
