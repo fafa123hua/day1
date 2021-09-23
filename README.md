@@ -270,3 +270,129 @@ antd 的模板，simple 是基础模板，complete 包含 antd 的集成方案�
 ## 设计组件
 
 掘金地址：https://juejin.cn/post/7010761400532516895/
+
+# day04 移动端
+
+小工具推荐
+
+anywhere 基于node的本地服务器
+
+- 安装 `npm i anywhere -g`
+- 启动 `anywhere`  `anywhere -p 8888`
+
+#### 视口设置
+
+viewport 视口设置： 移动端特有设置，解决移动端屏幕过小，放不下正常网站
+
+不设置，viewport时，视口大小为980；现在一般不用
+
+#### 像素分辨率
+
+物理像素（设备像素
+
+css像素
+
+像素比（获得window.devicePixelRatio)原先1px的内容放大到devicePixelRatio px显示
+
+#### 比例
+
+百分比
+
+rem 
+
+vw  100vw=1屏幕宽度
+
+媒体查询https://developer.mozilla.org/zh-CN/docs/Web/CSS/@media
+
+- width
+- min-width
+- max-width
+
+## 移动端事件
+
+#### touch事件
+
+- touchstart 手指触碰
+- touchmove 手指移动
+- touchend 手指抬起
+
+#### 移动端默认事件阻止
+
+- 阻止touchstart 默认事件
+
+  ```javascript
+  document.addEventListener("touchstart",(e)=>{
+  
+  ​            e.preventDefault();
+  
+  ​        },{
+  
+  ​            passive:false //默认为true不能修改
+  
+  ​        })
+  ```
+
+  1.滚动条滚动
+
+  2.页面缩放
+
+  3.超链接 
+
+  4.所有的鼠标事件，在移动端的执行
+
+  5.表单相关控件获得焦点
+
+  6.长按菜单
+
+- 阻止 touchmove 默认事件
+
+- 1.滚动条滚动
+
+  2.页面缩放
+
+- 阻止 touchend 默认事件
+
+#### TouchEvent
+
+- changedTouches 触发当前事件的手指列表
+- targetTouches 当前元素上手指列表
+- touches 当前屏幕中的手指列表
+
+#### 拖拽原理
+
+Mouse 事件机制和Touch事件机制的差异
+
+- Mouse 事件拖拽实现
+
+  mousedown 鼠标按下
+
+  mousemover 鼠标移动
+
+  mouseup 鼠标松开
+
+- Touch 事件拖拽实现
+
+  在哪个元素按下，在屏幕中移动依旧触发之前的
+
+  
+
+## 手势库的封装
+
+#### Mouse事件与Touch 事件的兼容处理
+
+#### 常用事件封装
+
+- 常用事件
+  - start、move、end
+  - pressstart、pressend
+  - tap
+  - panstart、pan、panend
+- 自定义事件
+  - new CustomEvent
+  - elemnt.dispatchEvent
+
+## taobao实战
+
+三种方式同时使用优先style > #id > .class
+
+吸顶，下拉无限刷新
