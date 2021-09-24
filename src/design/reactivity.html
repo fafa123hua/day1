@@ -1,0 +1,67 @@
+<div id="app">{{title}}</div>
+
+<script>
+  // 1.基本结构
+  const Vue = {
+    createApp(options) {
+      return {
+        mount(selector) {
+          // 1.找到宿主元素
+          const parent = document.querySelector(selector)
+          // 2.渲染页面
+          if (!options.render) {
+            //     2.1 处理template：编译
+            options.render = this.compile(parent.innerHTML)
+          }
+          // setup和其他选项
+          if (options.setup) {
+            this.setupState = options.setup()
+          }
+          if (options.data) {
+            this.data = options.data()
+          }
+          const proxy = new Proxy(this, {
+            get(target, key) {
+              // 先从setup中取，如果取不到再从data中取
+              if (target.setupState && key in target.setupState) {
+                return target.setupState[key]
+              } else {
+                return target.data[key]
+              }
+            },
+            set(target, key, val) {
+              if (target.setupState && key in target.setupState) {
+                target.setupState[key] = val
+              } else {
+                target.data[key] = val
+              }
+            },
+          })
+          //     2.2 用户直接编写render
+          const el = options.render.call(options.data())
+          // 3.追加到宿主
+          parent.innerHTML = ''
+          parent.appendChild(el)
+        },
+        compile(template) {
+          return function render() {
+            const h3 = document.createElement('h3')
+            h3.textContent = this.title
+            return h3
+          }
+        },
+      }
+    },
+  }
+</script>
+
+<script>
+  const app = Vue.createApp({
+    setup() {
+      const state = reactive({
+        title: 'vue3',
+      })
+    },
+  })
+  app.mount('#app')
+</script>

@@ -1,0 +1,35 @@
+<div id="app">{{title}}</div>
+
+<script src="http://unpkg.com/vue@next"></script>
+<script>
+  // 1.为什么用函数的方式
+  // 函数：vue3，react 支持类型 ts
+  // class: Angular vue decorator
+  const app = Vue.createApp({
+    data() {
+      return {
+        title: "dsadsa",
+      };
+    },
+    setup() {
+      //为了支持类型 消灭this
+      //声明响应式数据
+      //优先级比data高，不是覆盖策略
+      //复用性，可读性，可维护性
+      //hook
+      const state = Vue.reactive({
+        title: "dsdsadsaadsa",
+      });
+      return state;
+    },
+    // render(){
+    //     return Vue.h('div',{
+    //         title:this.title,
+    //     },'xxx')
+    // }
+  });
+  app.component("comp", {
+    template: "",
+  });
+  app.mount("#app");
+</script>
