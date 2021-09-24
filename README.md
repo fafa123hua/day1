@@ -396,3 +396,130 @@ Mouse 事件机制和Touch事件机制的差异
 三种方式同时使用优先style > #id > .class
 
 吸顶，下拉无限刷新
+
+
+
+# day05 框架
+
+## 1 设计理念
+
+### 1.1 动机
+
+#### 1.1.1 类型支持
+
+#### 1.1.2 实例方法和属性tree-shaking
+
+#### 1.1.3 复用性
+
+#### 1.1.4 api简化
+
+一致性优化
+
+v-model 和.sync，.sync被优化掉了
+
+rander
+
+#### 1.1.5 维护性
+
+#### 1.1.6 扩展性
+
+#### 1.1.7 性能优化
+
+响应式基于Proxy 但是兼容差（还没出的vue2.7解决）
+
+vue2 存在的问题
+
+递归问题 
+
+数组问题 单独一套实现方案
+
+api影响 动态新增删除
+
+数据结构的支持问题 class collection
+
+### 1.2 渐进式 progressive
+
+### 1.3 易上手
+
+### 1.4 数据驱动
+
+#### 1.4.1 减少dom操作
+
+#### 1.4.2 data-driven
+
+#### 1.4.3 声明式渲染
+
+ render
+
+#### 1.4.4 vdom
+
+#### 1.4.5 patc
+
+## 2 源码学习
+
+### 2.1 mini-vue
+
+#### 2.1.1 基本结构
+
+```
+<div id="app">{{title}}</div>
+
+<script >
+    // 1.基本结构
+    const Vue = {
+        createApp(options){
+            return {
+                mount(selector){
+                    // 1.找到宿主元素
+                    const parent = document.querySelector(selector)
+                    // 2.渲染页面
+                    if(!options.render){
+                    //     2.1 处理template：编译
+                    options.render = this.compile(parent.innerHTML)
+                    }
+                    //     2.2 用户直接编写render
+                    const el = options.render.call(options.data())
+                    // 3.追加到宿主
+                    parent.innerHTML = ''
+                    parent.appendChild(el)
+                    
+                    },
+                    compile(template) {
+                        return function render(){
+                            const h3 = document.createElement('h3')
+                            h3.textContent = this.title
+                            return h3
+                        }
+                } 
+            
+            }
+        }
+    }
+</script>
+
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        title: "dsadsa",
+      }
+    },
+  })
+  app.mount("#app");
+</script>
+
+```
+
+#### 2.1.2 兼容vue2.x
+
+#### 2.1.3 扩展性
+
+### 2.2 读读源码
+
+## 3 SFC原理
+
+## 4 JSX原理
+
+## 5 组件化
+
+## 6 MVVM
