@@ -461,7 +461,7 @@ api影响 动态新增删除
 
 #### 2.1.1 基本结构
 
-```
+```js
 <div id="app">{{title}}</div>
 
 <script >
@@ -512,11 +512,206 @@ api影响 动态新增删除
 
 #### 2.1.2 兼容vue2.x
 
+```
+<div id="app">{{title}}</div>
+
+<script>
+  // 1.基本结构
+  const Vue = {
+    createApp(options) {
+      return {
+        mount(selector) {
+          // 1.找到宿主元素
+          const parent = document.querySelector(selector)
+          // 2.渲染页面
+          if (!options.render) {
+            //     2.1 处理template：编译
+            options.render = this.compile(parent.innerHTML)
+          }
+          // setup和其他选项
+          if (options.setup) {
+            this.setupState = options.setup()
+          }
+          if (options.data) {
+            this.data = options.data()
+          }
+
+          // app.xxx
+          const proxy = new Proxy(this, {
+            get(target, key) {
+              // 先从setup中取，如果取不到再从data中取
+              if (target.setupState && key in target.setupState) {
+                return target.setupState[key]
+              } else {
+                return target.data[key]
+              }
+            },
+            set(target, key, val) {
+              if (target.setupState && key in target.setupState) {
+                target.setupState[key] = val
+              } else {
+                target.data[key] = val
+              }
+            },
+          })
+
+          //   2.2用户直接编写render
+          const el = options.render.call(proxy)
+
+          // 3.追加到宿主
+          parent.innerHTML = ''
+          parent.appendChild(el)
+          // insert(el, parent)
+        },
+        compile(template) {
+          return function render() {
+            const h3 = document.createElement('h3')
+            h3.textContent = this.title
+            return h3
+          }
+        },
+      }
+    },
+  }
+</script>
+
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        title: 'dddddd',
+      }
+    },
+    setup() {
+      return {
+        title: 'aaaaaaaa',
+      }
+    },
+  })
+  app.mount('#app')
+</script>
+
+```
+
 #### 2.1.3 扩展性
+
+```
+<div id="app">{{title}}</div>
+
+<script>
+  // 1.基本结构
+  const Vue = {
+    // 扩展性
+    createRenderer({ querySelector, insert }) {
+      // 返回渲染器
+      return {
+        createApp(options) {
+          // 返回app实例
+          return {
+            mount(selector) {
+              // console.log('mount!');
+              // 1.找到宿主元素
+              const parent = querySelector(selector)
+
+              // 2.渲染页面
+              if (!options.render) {
+                //   2.1处理template：编译
+                options.render = this.compile(parent.innerHTML)
+              }
+
+              // setup和其他选项
+              if (options.setup) {
+                this.setupState = options.setup()
+              }
+              if (options.data) {
+                this.data = options.data()
+              }
+
+              // app.xxx
+              const proxy = new Proxy(this, {
+                get(target, key) {
+                  // 先从setup中取，如果取不到再从data中取
+                  if (target.setupState && key in target.setupState) {
+                    return target.setupState[key]
+                  } else {
+                    return target.data[key]
+                  }
+                },
+                set(target, key, val) {
+                  if (target.setupState && key in target.setupState) {
+                    target.setupState[key] = val
+                  } else {
+                    target.data[key] = val
+                  }
+                },
+              })
+
+              //   2.2用户直接编写render
+              const el = options.render.call(proxy)
+
+              // 3.追加到宿主
+              parent.innerHTML = ''
+              // parent.appendChild(el)
+              insert(el, parent)
+            },
+            compile(template) {
+              // 返回一个render函数
+              // parse -> ast
+              // generate -> ast=>render
+              return function render() {
+                const h3 = document.createElement('h3')
+                h3.textContent = this.title
+                return h3
+              }
+            },
+          }
+        },
+      }
+    },
+    createApp(options) {
+      // 创建一个web平台特有渲染器
+      const renderer = Vue.createRenderer({
+        querySelector(sel) {
+          return document.querySelector(sel)
+        },
+        insert(el, parent) {
+          parent.appendChild(el)
+        },
+      })
+      return renderer.createApp(options)
+    },
+  }
+</script>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        title: 'dsadsad',
+      }
+    },
+    setup() {
+      // created
+      return {
+        title: '123132132',
+      }
+    },
+  })
+  app.mount('#app')
+</script>
+
+```
+
+#### 2.1.4 reactivity
 
 ### 2.2 读读源码
 
-## 3 SFC原理
+
+
+## 3 SFC原理 (单文件组件.vue)
+
+### 原理：
+
+vue-loader
 
 ## 4 JSX原理
 
